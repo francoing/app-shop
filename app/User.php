@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Cart;
 
 class User extends Authenticatable
 {
@@ -26,4 +27,27 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function carts(){
+
+        return $this->hasMany(cart::class);
+    }
+
+    //funcion que me devuelve el id del carrito que se encuentre en estado activo
+   public function getCartAttribute()
+   {
+       $cart=$this->carts()->where('status','Active')->first();
+       if($cart)
+       {
+           return $cart;
+       }
+       //else
+       //si no hay un carrito activo me crea uno lo pone en activo y le asigna el id
+       $cart = new Cart();
+       $cart->status = 'Active';
+       $cart ->user_id= $this->id;
+       $cart->save();
+
+       return $cart;
+   }
 }

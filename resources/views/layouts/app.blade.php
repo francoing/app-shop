@@ -6,7 +6,7 @@
 	<link rel="icon" type="image/png" href="../assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Sign Up Page - Material Kit by Creative Tim</title>
+	<title>@yield('title','App Shop')</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
@@ -19,12 +19,12 @@
     <link href="{{asset('/css/bootstrap.min.css')}}" rel="stylesheet" />
 	<link href="{{asset('/css/material-kit.css')}}" rel="stylesheet"/>
 	
-	
+	@yield('styles')
 
 </head>
 
 <body class="@yield('body-class')">
-	<nav class="navbar navbar-transparent navbar-absolute">
+	<nav class="navbar navbar-transparent navbar-fixed-top navbar-color-on-scroll">
     	<div class="container">
         	<!-- Brand and toggle get grouped for better mobile display -->
         	<div class="navbar-header">
@@ -34,21 +34,49 @@
 		            <span class="icon-bar"></span>
 		            <span class="icon-bar"></span>
         		</button>
-        		<a class="navbar-brand" href="#">Franco Montti</a>
+        		<a class="navbar-brand" href="{{url ('/')}}">App-Shop</a>
         	</div>
 
         	<div class="collapse navbar-collapse" id="navigation-example">
         		<ul class="nav navbar-nav navbar-right">
+
+			@guest
+				<li><a href="{{ route('login') }}">Ingresar</a></li>
+				<li><a href="{{ route('register') }}">Registro</a></li>
+			@else
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+						{{ Auth::user()->name }} <span class="caret"></span>
+					</a>
+					
+					<ul class="dropdown-menu" role="menu">
+
 					<li>
-    					<a href="../components-documentation.html" target="_blank">
-    						Components
-    					</a>
-    				</li>
-    				<li>
-						<a href="http://demos.creative-tim.com/material-kit-pro/presentation.html?ref=utp-freebie" target="_blank">
-							<i class="material-icons">unarchive</i> Upgrade to PRO
-						</a>
-    				</li>
+						<a href="{{url('/home')}}">Dashboard</a>
+					</li>
+						@if(auth()->user()->admin)
+
+						<li>
+							<a href="{{url('/admin/products')}}">Gestionar productos</a>
+
+						</li>
+						@endif
+
+						<li>
+							<a href="{{ route('logout') }}"
+								onclick="event.preventDefault();
+										 document.getElementById('logout-form').submit();">
+								Desconectarse
+							</a>
+
+							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+								{{ csrf_field() }}
+							</form>
+						</li>
+					</ul>
+				</li>
+			@endguest
+
 		            <li>
 		                <a href="#" target="_blank" class="btn btn-simple btn-white btn-just-icon">
 							<i class="fa fa-twitter"></i>
