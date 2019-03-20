@@ -39,7 +39,7 @@
 								<td class = "text-center"> {{$product-> id}} </td>
 								<td>{{$product-> name}}</td>
 								<td> {{$product-> description}}</td>
-								<td> {{$product-> category ? $product-> category ->name : 'General'}}</td> <!--si el producto pertenece a una categoria mostraremos el nombre si no el termino general-->
+								<td> {{$product-> category_name}}</td> <!--si el producto pertenece a una categoria mostraremos el nombre si no el termino general-->
 								<td class = "text-right"> &euro;{{$product-> price}}</td>
 								<td class = "td-actions text-right">
 									

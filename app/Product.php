@@ -38,4 +38,13 @@ class Product extends Model
         return '/images/products/default.jpg';
 
     }
+    //este es un metodo accesor que me dice si el nombre de la categoria existe devuelve su nombre si no le pone General como categoria
+    public function getCategoryNameAttribute(){
+        if ($this->category) {
+            return $this->category->name;
+        }
+        return 'General';
+
+        
+    }
 }

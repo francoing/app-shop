@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use App\ProductImage;
+use App\Category;
 
 class ProductController extends Controller
 {
@@ -21,7 +22,8 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('admin.products.create');//formulario de registro
+        $categories=Category::orderBy('name')->get();
+        return view('admin.products.create')->with(compact('categories'));;//formulario de registro
     }
 
 
@@ -62,6 +64,10 @@ class ProductController extends Controller
         $product->description= $request-> input('description');
         $product->price= $request-> input('price');
         $product->long_description= $request-> input('long_description');
+        $product->category_id= $request->category_id;
+        if ($product->category_id=$request->category_id=null) {
+           return $product->id='0';
+        }
         $product->save();
 
         return redirect('/admin/products');

@@ -60,13 +60,18 @@
 							<a href="{{url('/admin/products')}}">Gestionar productos</a>
 
 						</li>
+
+						<li>
+							<a href="{{url('/admin/categories')}}">Gestionar categorias</a>
+
+						</li>
 						@endif
 
 						<li>
 							<a href="{{ route('logout') }}"
 								onclick="event.preventDefault();
 										 document.getElementById('logout-form').submit();">
-								Desconectarse
+								Cerrar sesion
 							</a>
 
 							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
