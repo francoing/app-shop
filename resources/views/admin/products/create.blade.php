@@ -64,6 +64,7 @@
 								<option value="0">General</option>
 
 									@foreach ($categories as $category)
+									
 										<option value="{{$category->id}}">{{$category->name}}</option>
 
 									@endforeach
