@@ -65,8 +65,8 @@ class ProductController extends Controller
         $product->price= $request-> input('price');
         $product->long_description= $request-> input('long_description');
 
-        if ($product->category_id=$request->category_id=null) {
-           return $product->category_id=0;
+        if ($request->category_id == 0) {
+           return $product->category_id= null;
         }else {
             $product->category_id= $request->category_id;
         }
