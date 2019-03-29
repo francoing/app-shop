@@ -32,4 +32,22 @@ class Category extends Model
         'description'=>'max:200',
        
     ];
+
+    // esta funcion obtiene una imagen del primero producto y la pone como principal de la categoria
+    public function getFeaturedImageUrlAttribute()
+    {
+        // si la categoria tiene una imagen devolvemos la imagen
+        if ($this->image) {
+            return '/images/categories/'.$this->image;
+        }
+        //obtenemos el primer producto 
+            $firstProduct= $this->products()->first();
+                //si la categoria tiene un producto toma la imagen del primero
+                if ($firstProduct) {
+                    return $firstProduct->featured_image_url;
+        }
+
+        return '/images/default.jpg';
+       
+    }
 }

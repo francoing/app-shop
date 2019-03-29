@@ -48,7 +48,7 @@
 										{{ csrf_field() }}
 										{{method_field('DELETE')}}
 										
-									<a type = "button" rel = "tooltip" title = "Ver producto" class = "btn btn-info btn-simple btn-xs">
+									<a type = "button" rel = "tooltip" title = "Ver producto" class = "btn btn-info btn-simple btn-xs" href="{{url('/products/'.$product->id)}}" target="_blanck">
 										<i class = "fa fa-info"> </i>
 									</a>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Category;
+use File;
 
 class CategoryController extends Controller
 {
@@ -43,7 +44,22 @@ class CategoryController extends Controller
 
         //de esta manera lo hacemos de forma mas abreviada pasamos los campos que querramos que nuestra categoria tenga
 
-        Category::create($request->all());// se llama mass assignment asignacion masiva tenemos que ir a nuestro modelo y declarar que atributos va a tener nuestra categoria
+        //Category::create($request->all());// se llama mass assignment asignacion masiva tenemos que ir a nuestro modelo y declarar que atributos va a tener nuestra categoria
+
+        $category=Category::create($request->only('name','description'));
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path =public_path() . '/images/categories';
+            $fileName = uniqid().'-'. $file->getClientOriginalName();
+            $moved=$file->move($path,$fileName);
+
+            if ($moved) {
+                $category->image=$fileName;
+                $category->save();
+             }
+
+        }
 
         return redirect('/admin/categories');
         
@@ -69,7 +85,28 @@ class CategoryController extends Controller
         //registrar el nuevo producto en la BD
 
         //dd($request->all());
-       $category->update($request->all());
+       $category->update($request->only('name','description'));
+
+       if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path =public_path() . '/images/categories';
+            $fileName = uniqid().'-'. $file->getClientOriginalName();
+            $moved=$file->move($path,$fileName);
+
+            if ($moved) {
+
+                $previousPath= $path . '/'.$category->image;
+
+                $category->image=$fileName;
+                $saved=$category->save();//update
+
+                if ($saved) {
+                    File::delete($previousPath);
+                }
+        
+            }
+        }
+
         return redirect('/admin/categories');
         
     }

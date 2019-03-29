@@ -35,7 +35,7 @@ class Product extends Model
             return $featuredImage ->url;
 
         }
-        return '/images/products/default.jpg';
+        return '/images/default.jpg';
 
     }
     //este es un metodo accesor que me dice si el nombre de la categoria existe devuelve su nombre si no le pone General como categoria
